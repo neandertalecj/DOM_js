@@ -130,6 +130,17 @@ function changeCoord(prop){
 function showBlock(value, prop) {
 	elem.style[prop] = value + 'px';
 }
+//--------------------------------------------------------------------------
+function changeColor(){
+	var userId = prompt('Enter id');
+	var color = prompt('Enter color');
+	var el = document.getElementById(userId);
+	if (el === null) {
+		alert('Error');
+		return;
+	}
+	el.style.backgroundColor = color;
+}
 
 	</script>
 </html>
