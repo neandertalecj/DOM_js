@@ -20,6 +20,17 @@
 				/*width: 30px;*/
 				height: 100px;
 			}
+			/*-tab-*/
+			.tab{
+				display: none;
+			}
+			.tab.activ{
+				display: block;
+			}
+			.tab-wrap li.activ{
+				background-color: pink;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -44,6 +55,15 @@
 			<hr>
 			<button onclick="addW()">Width</button>
 			<div id="one2" class="box"></div>
+		</div>
+		<hr>
+		<ul class="tab-wrap">
+			<li data-target="home" class="activ" onclick="tabs(this)">Home</li>
+			<li data-target="catalog" onclick="tabs(this)">Catalog</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab activ" id="home">Home content</div>
+			<div class="tab" id="catalog">Catalog content</div>
 		</div>
 	</body>
 
@@ -140,6 +160,21 @@ function changeColor(){
 		return;
 	}
 	el.style.backgroundColor = color;
+}
+//------------------------------------------------------------------------
+//-----------------Tab----------------------------------------------------
+function tabs(el){
+	var tabCollection = document.getElementsByClassName('tab');
+	console.log(tabCollection);
+	for(let i=0; i<tabCollection.length; i++) {
+		tabCollection[i].classList.remove('activ');
+	}
+	var tabsLiCllection =document.querySelectorAll('.tab-wrap li');
+	for(let i=0; i<tabsLiCllection.length; i++) {
+		tabsLiCllection[i].classList.remove('activ');
+	}
+	el.classList.add('activ');
+	document.getElementById(el.getAttribute('data-target')).classList.add('activ');
 }
 
 	</script>
