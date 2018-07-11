@@ -33,6 +33,20 @@
 			li:hover{
 				cursor: pointer;
 			}
+			/*rectangles*/
+			.box1{
+				width: 70px;
+				height: 70px;
+			}
+			#wrap-box{
+				display: flex;
+				margin-top: 50px;
+			}
+			.red{ background-color: red;}
+			.blue{background-color: blue;}
+			.green{background-color: green;}
+			.yellow{background-color: yellow;}
+			.gray{background-color: gray;}
 		</style>
 	</head>
 	<body>
@@ -66,6 +80,13 @@
 		<div class="tab-content">
 			<div class="tab activ" id="home">Home content</div>
 			<div class="tab" id="catalog">Catalog content</div>
+		</div>
+		<div id="wrap-box">
+			<div class="box1 red"></div>
+			<div class="box1 blue"></div>
+			<div class="box1 green"></div>
+			<div class="box1 yellow"></div>
+			<div class="box1 gray"></div>
 		</div>
 	</body>
 
@@ -186,6 +207,22 @@ function tabs(el){
 	// node.className
 	// node.classList.togle()   .contains()   .add()   .remove('green')
 	// getComputedStyle(node);
+//----------------Boxes---------------------------------------------------
+function changeColor(){
+	var curClass = this.classList[1];
+	console.log(curClass);
+	var nextClass = this.nextElementSibling.classList[1];
+
+	this.classList.remove(curClass);
+	this.classList.add(nextClass);
+
+	this.nextElementSibling.classList.remove(nextClass);
+	this.nextElementSibling.classList.add(curClass);
+}
+var colectionBox = document.getElementsByClassName('box1');
+for (var i = 0; i < colectionBox.length; i++) {
+	colectionBox[i].addEventListener('click', changeColor);
+}
 
 	</script>
 </html>
