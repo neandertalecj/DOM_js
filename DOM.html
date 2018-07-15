@@ -48,6 +48,12 @@
 			.yellow{background-color: yellow;}
 			.gray{background-color: gray;}
 			/**/
+			#five, #six{
+				margin-top: 30px;
+				height: 40px;
+				background-color: orange;
+			}
+			/**/
 			#field{
 				margin-top: 40px;
 				height: 400px;
@@ -103,8 +109,9 @@
 			<div class="box1 yellow"></div>
 			<div class="box1 gray"></div>
 		</div>
-
-
+		
+		<div id='five'> Chenge background color with click event, mouseover or mouseout</div>
+		<div id='six'> Chenge background color with click event, mouseover or mouseout with CONFIG file</div>
 
 		<div id="field">
 			<div id="reng"></div>
@@ -252,11 +259,87 @@ function changeColor(){
 	second.classList.add(curClass);
 }
 
-
 for (var i = 0; i < colectionBox.length; i++) {
 	colectionBox[i].addEventListener('click', changeColor);
 }
 //-------------------------------------------------------------------------
+//---------------Enents Object---------------------------------------------
+var five = document.getElementById('five');
+
+function chaneBGofFive(e) {
+	switch(e.type) {
+		case 'click': this.style.backgroundColor = 'red';
+			break;
+		case'mouseover': this.style.backgroundColor = 'yellow';
+			break;
+		case 'mouseout': this.style.backgroundColor = 'pink';
+			break;
+	}
+}
+
+five.addEventListener('click', chaneBGofFive);
+five.addEventListener('mouseover', chaneBGofFive);
+five.addEventListener('mouseout', chaneBGofFive);
+// ----------------the same with CONFIG----------------------------------------
+var six = document.getElementById('six');
+
+function chaneBGofSix(e) {
+	this.style.backgroundColor = config[e.type];
+}
+
+var config = {
+	'click': 'black',
+	'mouseover': 'lime',
+	'mouseout': 'blue'
+}
+
+six.addEventListener('click', chaneBGofSix);
+six.addEventListener('mouseover', chaneBGofSix);
+six.addEventListener('mouseout', chaneBGofSix);
+
+//---------------------------------------------------------------
+var field = document.getElementById('field');
+
+function callback(e){
+	e.preventDefault();
+}
+
+field.addEventListener('contextmenu', callback);
+//----------------------------------------------------------------
+
+var field = document.getElementById('field');
+var reng = document.getElementById('reng');
+
+function handler(e) {
+	switch(e.type) {
+		case 'click': move(e.clientY, e.clientX);
+			break;
+		case 'keydown':
+		var st = getComputedStyle(r);
+			if (e.keyCode > 36 && e.keyCode < 41) {
+				switch(e.keyCode){
+					case 37: move(parseInt(st.top), parseint(st.left) + 30);
+						break;
+					case 38: move(parseInt(st.top) + 30, parseint(st.left));
+						break;
+					case 39: move(parseInt(st.top), parseint(st.left) - 30);
+						break;
+					case 40: move(parseInt(st.top) - 30, parseint(st.left));
+						break;
+				}//End secondary switch
+			}//End if
+			break;
+	} //End primary cwitch 
+}
+
+function move(t, l) {
+	reng.style.top = t +'px';
+	reng.style.left = l +'px';
+}
+
+field.addEventListener('click', handler);
+document.addEventListener('keydown', handler);
+
 
 	</script>
 </html>
