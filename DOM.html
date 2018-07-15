@@ -47,6 +47,21 @@
 			.green{background-color: green;}
 			.yellow{background-color: yellow;}
 			.gray{background-color: gray;}
+			/**/
+			#field{
+				margin-top: 40px;
+				height: 400px;
+				background-color: grey;
+				position: relative;
+			}
+			#reng{
+				background-color: black;
+				height: 50px;
+				width: 50px;
+				position: absolute;
+				top: 50px;
+				left: 50px;
+			}
 		</style>
 	</head>
 	<body>
@@ -87,6 +102,12 @@
 			<div class="box1 green"></div>
 			<div class="box1 yellow"></div>
 			<div class="box1 gray"></div>
+		</div>
+
+
+
+		<div id="field">
+			<div id="reng"></div>
 		</div>
 	</body>
 
@@ -208,21 +229,34 @@ function tabs(el){
 	// node.classList.togle()   .contains()   .add()   .remove('green')
 	// getComputedStyle(node);
 //----------------Boxes---------------------------------------------------
-function changeColor(){
-	var curClass = this.classList[1];
-	console.log(curClass);
-	var nextClass = this.nextElementSibling.classList[1];
-
-	this.classList.remove(curClass);
-	this.classList.add(nextClass);
-
-	this.nextElementSibling.classList.remove(nextClass);
-	this.nextElementSibling.classList.add(curClass);
-}
 var colectionBox = document.getElementsByClassName('box1');
+
+function changeColor(){
+	var first = this;
+	var second;
+
+	if (first.nextElementSibling && 
+		first.nextElementSibling.classList.contains('box1')) {
+		second = first.nextElementSibling;
+	} else {
+		console.log(colectionBox);
+	}
+
+	var curClass = first.classList[1];
+	var nextClass = second.classList[1];
+
+	first.classList.remove(curClass);
+	first.classList.add(nextClass);
+
+	second.classList.remove(nextClass);
+	second.classList.add(curClass);
+}
+
+
 for (var i = 0; i < colectionBox.length; i++) {
 	colectionBox[i].addEventListener('click', changeColor);
 }
+//-------------------------------------------------------------------------
 
 	</script>
 </html>
