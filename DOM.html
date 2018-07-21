@@ -68,6 +68,17 @@
 				top: 50px;
 				left: 50px;
 			}
+			/**/
+			td{
+				border: 2px solid black;
+				padding: 50px;
+				width: 0;
+				height: 0;
+			}		
+			table{
+				border-spacing: 20px;
+				border-collapse: separate;
+			}
 		</style>
 	</head>
 	<body>
@@ -116,6 +127,34 @@
 		<div id="field">
 			<div id="reng"></div>
 		</div>
+
+		<table>
+			<tr>
+				<td>Item1</td>
+				<td>Item2</td>
+				<td>Item3</td>
+			</tr>
+			<tr>
+				<td>Item4</td>
+				<td>Item5</td>
+				<td>Item6</td>
+			</tr>
+			<tr>
+				<td>Item7</td>
+				<td>Item8</td>
+				<td>Item9</td>
+			</tr>
+		</table>
+		<hr>
+			<input type="number" id='a'>
+			<input type="number" id='b'>
+			<div class="actions">
+				<button>+</button>
+				<button>-</button>
+				<button>/</button>
+				<button>*</button>
+			</div>
+			<p id="result"></p>
 	</body>
 
 		
@@ -309,22 +348,23 @@ field.addEventListener('contextmenu', callback);
 
 var field = document.getElementById('field');
 var reng = document.getElementById('reng');
+//Should to set position: apsolut; top; left
 
 function handler(e) {
 	switch(e.type) {
-		case 'click': move(e.clientY, e.clientX);
+		case 'click': move(e.clientY - 248, e.clientX);
 			break;
 		case 'keydown':
-		var st = getComputedStyle(r);
+		var st = getComputedStyle(reng);
 			if (e.keyCode > 36 && e.keyCode < 41) {
 				switch(e.keyCode){
-					case 37: move(parseInt(st.top), parseint(st.left) + 30);
+					case 37: move(parseInt(st.top), parseInt(st.left) - 30);
 						break;
-					case 38: move(parseInt(st.top) + 30, parseint(st.left));
+					case 38: move(parseInt(st.top) - 30, parseInt(st.left));
 						break;
-					case 39: move(parseInt(st.top), parseint(st.left) - 30);
+					case 39: move(parseInt(st.top), parseInt(st.left) + 30);
 						break;
-					case 40: move(parseInt(st.top) - 30, parseint(st.left));
+					case 40: move(parseInt(st.top) + 30, parseInt(st.left));
 						break;
 				}//End secondary switch
 			}//End if
@@ -340,6 +380,85 @@ function move(t, l) {
 field.addEventListener('click', handler);
 document.addEventListener('keydown', handler);
 
+
+// ------------------------------------------------------------------------
+// ------------------------------------------------------------------------
+		var activeEl;
+		function changeBg(e){
+			if (e.target.tagName == 'TD') {
+				if (activeEl !== undefined) {
+					activeEl.style.background = '';
+				}
+				activeEl = e.target;
+				activeEl.style.background = 'yellow';
+			}
+		}
+
+		document.querySelector('table').addEventListener('click', changeBg);
+//--------------------------------------------------------------------------
+//-------Calculator---------------------------------------------------------
+	function getDataFromInput(id){
+		if (isEmpty(id)) {
+			showError('Empty set');
+			return;
+		}
+			var v = + document.getElementById(id).value;
+			return v;
+	}
+
+	function checkNum(num) {
+		if (isNaN(num)) {
+			return false;
+		}
+		return true;
+	}
+
+	console.log(checkNum(4));
+
+	function isEmpty(id) {
+		if (document.getElementById(id).value == ''){
+			return true;
+		}
+		return false;
+	}
+
+	function showError(error) {
+		alert(error);
+	}
+
+	function showResult(result) {
+		document.getElementById('result').innerHTML = result;
+	}
+
+	function handler(e) {
+		if (e.target.tagName == 'BUTTON') {
+			var a = getDataFromInput('a');
+			var b = getDataFromInput('b');
+			console.log(a);
+			console.log(b);
+			if (checkNum(a) && checkNum(b)) {
+				switch(e.target.innerHTML) {
+					case '+': showResult(a+b);
+						break;
+					case '-': showResult(a-b);
+						break;
+					case '*': showResult(a*b);
+						break;
+					case '/': 
+						if (b == 0) {
+							showError('Не можна ділити на 0')
+						} else {
+							showResult(a/b);
+						}
+						break;
+				}
+			} else {
+				showError('Wrong format!');
+			}
+		}
+	}
+
+	document.querySelector('.actions').addEventListener('click', handler);
 
 	</script>
 </html>
